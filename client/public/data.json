@@ -1,0 +1,22 @@
+[{
+    "name": "joe",
+    "lastName": "mongo",
+    "password": "secret",
+    "email": "joe@gmail.com",
+    "location": "Dallas, TX"
+},
+{
+    "name": "jeff",
+    "lastName": "watson",
+    "password": "secret",
+    "email": "jeff@gmail.com",
+    "location": "Dallas, TX"
+},
+{
+    "name": "ronald",
+    "lastName": "mc donald",
+    "password": "secret",
+    "email": "ronald@junkfood.com",
+    "location": "Tampa, FL"
+}
+]

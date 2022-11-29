@@ -5,3 +5,9 @@
 - See how your body responds to different foods.
 - Feel energized and at your best each day.
 
+
+
+```
+Back: npm run server
+Front: npm run client
+```
