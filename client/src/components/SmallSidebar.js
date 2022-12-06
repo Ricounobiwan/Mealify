@@ -21,6 +21,7 @@ const SmallSidebar = () => {
           </button>
           <header>
             <Logo />
+            <p>----------------------------</p>
           </header>
           <NavLinks toggleSidebar={toggleSidebar} />
         </div>
