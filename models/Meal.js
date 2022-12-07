@@ -2,18 +2,18 @@ import mongoose from "mongoose";
 
 const MealSchema = new mongoose.Schema(
   {
-    title: {
+    mealTitle: {
       type: String,
       required: [true, "Please provide meal title"],
       minlength: 3,
       maxlength: 100,
       trim: true,
     },
-    date: {
+    mealDate: {
       type: String,
       required: [true, "Please provide date for this meal"],
     },
-    type: {
+    mealScore: {
       type: String,
       enum: [
         "8-10 Great score - Stable glucose response",
@@ -24,13 +24,13 @@ const MealSchema = new mongoose.Schema(
       default: "No score yet",
       required: [false, "Please provide a meal score"],
     },
-    type: {
+    mealType: {
       type: String,
       enum: ["Breakfast", "Lunch", "Dinner", "Snack"],
       default: "Snack",
       required: [true, "Please provide a meal type"],
     },
-    location: {
+    mealLocation: {
       type: String,
       default: "my city",
       required: true,

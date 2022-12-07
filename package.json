@@ -1,7 +1,7 @@
 {
   "name": "mealify",
   "version": "1.0.0",
-  "description": "#### Track Your Job Search",
+  "description": "#### Track Your Meals and Glucose",
   "main": "index.js",
   "type": "module",
   "scripts": {

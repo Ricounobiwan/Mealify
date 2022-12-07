@@ -17,6 +17,11 @@ import {
   UPDATE_USER_BEGIN,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
+  HANDLE_CHANGE,
+  CLEAR_VALUES,
+  CREATE_MEAL_BEGIN,
+  CREATE_MEAL_SUCCESS,
+  CREATE_MEAL_ERROR,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -31,8 +36,21 @@ const initialState = {
   user: user ? JSON.parse(user) : null,
   token: token,
   userLocation: userLocation || "",
-  jobLocation: userLocation || "",
   showSidebar: false,
+  isEditing: false,
+  editMealId: "",
+  mealTitle: "",
+  mealDate: "",
+  mealLocation: userLocation || "",
+  mealTypeOptions: ["Breakfast", "Lunch", "Dinner", "Snack"],
+  mealType: "Snack",
+  mealScoreOptions: [
+    "8-10 Great score - Stable glucose response",
+    "5-7 Moderate glucose response. Swapping certain ingredients or experimenting with meal timing may help",
+    "1-4 High glucose response. Pay attention and consider avoiding",
+    "No score yet",
+  ],
+  mealScore: "No score yet",
 };
 
 const AppContext = React.createContext();
@@ -96,6 +114,12 @@ const AppProvider = ({ children }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     localStorage.removeItem("location");
+  };
+
+  // ====================================================================
+  // ===== TOGGLE SIDEBAR
+  const toggleSidebar = () => {
+    dispatch({ type: TOGGLE_SIDEBAR });
   };
 
   // ==============================================================
@@ -176,9 +200,49 @@ const AppProvider = ({ children }) => {
   };
 
   // ====================================================================
-  // ===== TOGGLE SIDEBAR
-  const toggleSidebar = () => {
-    dispatch({ type: TOGGLE_SIDEBAR });
+  // ===== HANDLE CHANGE
+  const handleChange = ({ name, value }) => {
+    dispatch({ type: HANDLE_CHANGE, payload: { name, value } });
+  };
+
+  // ====================================================================
+  // ===== CLEAR VALUES
+  const clearValues = () => {
+    dispatch({ type: CLEAR_VALUES });
+  };
+
+  // ====================================================================
+  // ===== CREATE MEAL
+  const createMeal = async () => {
+    dispatch({ type: CREATE_MEAL_BEGIN });
+    try {
+      const { mealTitle, mealDate, mealLocation, mealType, mealScore } = state;
+      console.log(
+        mealTitle,
+        mealDate,
+        mealLocation,
+        mealType,
+        mealScore,
+        token
+      );
+      console.log("authFetch");
+      await authFetch.post("/meals", {
+        mealTitle,
+        mealDate,
+        mealLocation,
+        mealType,
+        mealScore,
+      });
+      dispatch({ type: CREATE_MEAL_SUCCESS });
+      dispatch({ type: CLEAR_VALUES });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: CREATE_MEAL_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
   };
 
   return (
@@ -191,6 +255,9 @@ const AppProvider = ({ children }) => {
         toggleSidebar,
         logoutUser,
         updateUser,
+        handleChange,
+        clearValues,
+        createMeal,
       }}
     >
       {children}

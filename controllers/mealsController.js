@@ -2,9 +2,10 @@ import Meal from "../models/Meal.js";
 import { StatusCodes } from "http-status-codes";
 import { BadRequestError, UnAuthenticatedError } from "../errors/index.js";
 
-const createJob = async (req, res) => {
-  const { title, date } = req.body;
-  if (!title || !date) {
+const createMeal = async (req, res) => {
+  console.log("req.body", req.body);
+  const { mealTitle, mealDate } = req.body;
+  if (!mealTitle || !mealDate) {
     throw new BadRequestError("Please provide all values");
   }
   req.body.createdBy = req.user.userId;
@@ -12,20 +13,20 @@ const createJob = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ meal });
 };
 
-const getAllJobs = async (req, res) => {
-  res.send("get All Jobs");
+const getAllMeals = async (req, res) => {
+  res.send("get All Meals");
 };
 
-const updateJob = async (req, res) => {
-  res.send("update job");
+const updateMeal = async (req, res) => {
+  res.send("update meal");
 };
 
-const deleteJob = async (req, res) => {
-  res.send("delete job");
+const deleteMeal = async (req, res) => {
+  res.send("delete meal");
 };
 
 const showStats = async (req, res) => {
   res.send("show Stats");
 };
 
-export { createJob, deleteJob, getAllJobs, updateJob, showStats };
+export { createMeal, deleteMeal, getAllMeals, updateMeal, showStats };

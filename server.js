@@ -10,7 +10,7 @@ import connectDB from "./db/connect.js";
 
 // routers
 import authRouter from "./routes/authRoutes.js";
-import jobsRouter from "./routes/jobsRoutes.js";
+import mealsRouter from "./routes/mealsRoutes.js";
 
 // middleware
 import notFoundMiddleware from "./middleware/not-found.js";
@@ -36,7 +36,7 @@ app.get("/api/v1", (req, res) => {
 });
 
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/jobs", authenticateUser, jobsRouter);
+app.use("/api/v1/meals", authenticateUser, mealsRouter);
 
 // if no routes match...
 app.use(notFoundMiddleware);

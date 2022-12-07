@@ -16,8 +16,8 @@ const SharedLayout = () => {
         </div>
       </main>
       {/* <nav>
-        <Link to="add-job">Add meal</Link>
-        <Link to="all-jobs">All meals</Link>
+        <Link to="add-meal">Add meal</Link>
+        <Link to="all-meals">All meals</Link>
       </nav> */}
     </Wrapper>
   );

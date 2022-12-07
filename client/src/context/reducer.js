@@ -12,6 +12,11 @@ import {
   UPDATE_USER_BEGIN,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
+  HANDLE_CHANGE,
+  CLEAR_VALUES,
+  CREATE_MEAL_BEGIN,
+  CREATE_MEAL_SUCCESS,
+  CREATE_MEAL_ERROR,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -48,7 +53,7 @@ const reducer = (state, action) => {
       token: action.payload.token,
       user: action.payload.user,
       userLocation: action.payload.userLocation,
-      jobLocation: action.payload.jobLocation,
+      mealLocation: action.payload.mealLocation,
       showAlert: true,
       alertType: "success",
       alertText: "User Created! Redirecting...",
@@ -59,7 +64,6 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
-
       showAlert: true,
       alertType: "danger",
       alertText: action.payload.msg,
@@ -79,7 +83,7 @@ const reducer = (state, action) => {
       token: action.payload.token,
       user: action.payload.user,
       userLocation: action.payload.userLocation,
-      jobLocation: action.payload.jobLocation,
+      mealLocation: action.payload.mealLocation,
       showAlert: true,
       alertType: "success",
       alertText: "Login Successful! Redirecting...",
@@ -116,7 +120,7 @@ const reducer = (state, action) => {
       token: action.payload.token,
       user: action.payload.user,
       userLocation: action.payload.userLocation,
-      jobLocation: action.payload.jobLocation,
+      mealLocation: action.payload.mealLocation,
       showAlert: true,
       alertType: "success",
       alertText: "User Profile Updated!",
@@ -140,8 +144,62 @@ const reducer = (state, action) => {
       ...initialState,
       user: null,
       token: null,
-      jobLocation: "",
+      mealLocation: "",
       userLocation: "",
+    };
+  }
+
+  // ====================================================================
+  // ===== HANDLE CHANGE
+  if (action.type === HANDLE_CHANGE) {
+    return {
+      ...state,
+      [action.payload.name]: action.payload.value,
+    };
+  }
+
+  // ====================================================================
+  // ===== CLEAR VALUES
+  if (action.type === CLEAR_VALUES) {
+    const initialState = {
+      isEditing: false,
+      editMealId: "",
+      mealTitle: "",
+      mealDate: "",
+      mealLocation: state.userLocation,
+      mealType: "Snack",
+      mealScore: "No score yet",
+    };
+
+    return {
+      ...state,
+      ...initialState,
+    };
+  }
+
+  // ====================================================================
+  // ===== MEALS
+  if (action.type === CREATE_MEAL_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+
+  if (action.type === CREATE_MEAL_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "New Meal Created!",
+    };
+  }
+
+  if (action.type === CREATE_MEAL_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
     };
   }
 
