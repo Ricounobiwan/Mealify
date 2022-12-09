@@ -1,5 +1,5 @@
-import React, { useReducer, useContext } from "react";
-
+// TODO: Remove useEffect from import
+import React, { useReducer, useContext, useEffect } from "react";
 import reducer from "./reducer";
 import axios from "axios";
 
@@ -22,6 +22,15 @@ import {
   CREATE_MEAL_BEGIN,
   CREATE_MEAL_SUCCESS,
   CREATE_MEAL_ERROR,
+  GET_MEALS_BEGIN,
+  GET_MEALS_SUCCESS,
+  GET_GLUCOSE_BEGIN,
+  GET_GLUCOSE_SUCCESS,
+  SET_EDIT_MEAL,
+  DELETE_JOB_BEGIN,
+  EDIT_MEAL_BEGIN,
+  EDIT_MEAL_SUCCESS,
+  EDIT_MEAL_ERROR,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -45,12 +54,20 @@ const initialState = {
   mealTypeOptions: ["Breakfast", "Lunch", "Dinner", "Snack"],
   mealType: "Snack",
   mealScoreOptions: [
-    "8-10 Great score - Stable glucose response",
-    "5-7 Moderate glucose response. Swapping certain ingredients or experimenting with meal timing may help",
-    "1-4 High glucose response. Pay attention and consider avoiding",
+    "8-10 Great score - Stable glucose response.",
+    "5-7 Moderate glucose response. Swapping certain ingredients or experimenting with meal timing may help.",
+    "1-4 High glucose response. Pay attention and consider avoiding.",
     "No score yet",
   ],
   mealScore: "No score yet",
+  meals: [],
+  totalMeals: 0,
+  numOfPages: 1,
+  page: 1,
+  glucose: [],
+  totalGlucose: 0,
+  numOfPagesGlucose: 1,
+  pageGlucose: 1,
 };
 
 const AppContext = React.createContext();
@@ -84,7 +101,7 @@ const AppProvider = ({ children }) => {
     (error) => {
       console.log(error.response);
       if (error.response.status === 401) {
-        logoutUser();
+        logoutUser(); //
         console.log("AUTH ERROR => LOGGING OUT USER");
       }
       return Promise.reject(error);
@@ -92,12 +109,14 @@ const AppProvider = ({ children }) => {
   );
 
   // ==============================================================
+  // display alert
   const displayAlert = () => {
     dispatch({ type: DISPLAY_ALERT });
     clearAlert();
   };
 
   // ==============================================================
+  // clear alert
   const clearAlert = () => {
     setTimeout(() => {
       dispatch({ type: CLEAR_ALERT });
@@ -128,7 +147,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: REGISTER_USER_BEGIN });
     try {
       const response = await axios.post("/api/v1/auth/register", currentUser);
-      // console.log(response);
+
       const { user, token, location } = response.data;
       dispatch({
         type: REGISTER_USER_SUCCESS,
@@ -245,6 +264,102 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  // ====================================================================
+  // ===== GET ALL MEALS
+  const getMeals = async () => {
+    let url = "/meals";
+    dispatch({ type: GET_MEALS_BEGIN });
+    try {
+      const { data } = await authFetch(url);
+      const { meals, totalMeals, numOfPages } = data;
+      dispatch({
+        type: GET_MEALS_SUCCESS,
+        payload: {
+          meals,
+          totalMeals,
+          numOfPages,
+        },
+      });
+    } catch (error) {
+      console.log(error.response);
+      // logoutUser();  // TODO
+    }
+    clearAlert();
+  };
+
+  // ====================================================================
+  // ===== GET ALL GLUCOSE
+  const getGlucose = async () => {
+    let url = "/glucose";
+    dispatch({ type: GET_GLUCOSE_BEGIN });
+    try {
+      const { data } = await authFetch(url);
+      const { glucose, totalGlucose, numOfPagesGlucose } = data;
+      dispatch({
+        type: GET_GLUCOSE_SUCCESS,
+        payload: {
+          glucose,
+          totalGlucose,
+          numOfPagesGlucose,
+        },
+      });
+    } catch (error) {
+      // here, only possible errors are: 500 Server's down or 401 Unauthenticated user
+      console.log(error.response);
+      // logoutUser();  // TODO
+    }
+    clearAlert();
+  };
+
+  // ====================================================================
+  // ===== SET EDIT MEAL
+  const setEditMeal = (id) => {
+    dispatch({ type: SET_EDIT_MEAL, payload: { id } });
+  };
+
+  const editMeal = async () => {
+    dispatch({ type: EDIT_MEAL_BEGIN });
+    try {
+      const { mealTitle, mealDate, mealLocation, mealType, mealScore } = state;
+      await authFetch.patch(`/meals/${state.editMealId}`, {
+        mealTitle,
+        mealDate,
+        mealLocation,
+        mealType,
+        mealScore,
+      });
+      dispatch({ type: EDIT_MEAL_SUCCESS });
+      dispatch({ type: CLEAR_VALUES });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: EDIT_MEAL_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
+  // ====================================================================
+  // ===== DELETE MEAL
+  const deleteMeal = async (mealId) => {
+    dispatch({ type: DELETE_JOB_BEGIN });
+    try {
+      await authFetch.delete(`/meals/${mealId}`);
+      getMeals();
+    } catch (error) {
+      console.log(error.response);
+      // TODO logoutUser()
+    }
+  };
+
+  // ====================================================================
+  // TEMPORARY
+  // useEffect(() => {
+  //   getMeals();
+  //   getGlucose();
+  // }, []);
+
   return (
     <AppContext.Provider
       value={{
@@ -258,6 +373,11 @@ const AppProvider = ({ children }) => {
         handleChange,
         clearValues,
         createMeal,
+        getGlucose,
+        getMeals,
+        setEditMeal,
+        deleteMeal,
+        editMeal,
       }}
     >
       {children}

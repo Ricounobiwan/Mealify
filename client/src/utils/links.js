@@ -7,7 +7,13 @@ const links = [
   { id: 1, text: "stats", path: "/", icon: <IoBarChartSharp /> },
   { id: 2, text: "all meals", path: "/all-meals", icon: <MdQueryStats /> },
   { id: 3, text: "add meal", path: "/add-meal", icon: <FaWpforms /> },
-  { id: 4, text: "profile", path: "/profile", icon: <ImProfile /> },
+  {
+    id: 4,
+    text: "all events",
+    path: "/all-glucose",
+    icon: <MdQueryStats />,
+  },
+  { id: 5, text: "profile", path: "/profile", icon: <ImProfile /> },
 ];
 
 export default links;

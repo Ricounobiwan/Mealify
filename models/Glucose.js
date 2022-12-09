@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const SensorDataSchema = new mongoose.Schema(
+const GlucoseSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -78,3 +78,5 @@ const SensorDataSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+export default mongoose.model("Glucose", GlucoseSchema);

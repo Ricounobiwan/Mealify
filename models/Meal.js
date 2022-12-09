@@ -16,9 +16,9 @@ const MealSchema = new mongoose.Schema(
     mealScore: {
       type: String,
       enum: [
-        "8-10 Great score - Stable glucose response",
+        "8-10 Great score - Stable glucose response.",
         "5-7 Moderate glucose response. Swapping certain ingredients or experimenting with meal timing may help.",
-        "1-4 High glucose response. Pay attention and consider avoiding",
+        "1-4 High glucose response. Pay attention and consider avoiding.",
         "No score yet",
       ],
       default: "No score yet",

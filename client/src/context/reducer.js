@@ -17,6 +17,15 @@ import {
   CREATE_MEAL_BEGIN,
   CREATE_MEAL_SUCCESS,
   CREATE_MEAL_ERROR,
+  GET_MEALS_BEGIN,
+  GET_MEALS_SUCCESS,
+  GET_GLUCOSE_BEGIN,
+  GET_GLUCOSE_SUCCESS,
+  SET_EDIT_MEAL,
+  DELETE_JOB_BEGIN,
+  EDIT_MEAL_BEGIN,
+  EDIT_MEAL_SUCCESS,
+  EDIT_MEAL_ERROR,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -178,7 +187,7 @@ const reducer = (state, action) => {
   }
 
   // ====================================================================
-  // ===== MEALS
+  // ===== CREATE MEALS
   if (action.type === CREATE_MEAL_BEGIN) {
     return { ...state, isLoading: true };
   }
@@ -194,6 +203,89 @@ const reducer = (state, action) => {
   }
 
   if (action.type === CREATE_MEAL_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
+    };
+  }
+
+  // ====================================================================
+  // ===== GET MEALS
+  if (action.type === GET_MEALS_BEGIN) {
+    return { ...state, isLoading: true, showAlert: false };
+  }
+  if (action.type === GET_MEALS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      meals: action.payload.meals,
+      totalMeals: action.payload.totalMeals,
+      numOfPages: action.payload.numOfPages,
+    };
+  }
+
+  // ====================================================================
+  // ===== GET GLUCOSE
+  if (action.type === GET_GLUCOSE_BEGIN) {
+    return { ...state, isLoading: true, showAlert: false };
+  }
+  if (action.type === GET_GLUCOSE_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      glucose: action.payload.glucose,
+      totalGlucose: action.payload.totalGlucose,
+      numOfPagesGlucose: action.payload.numOfPagesGlucose,
+    };
+  }
+
+  // ====================================================================
+  // ===== SET EDIT MEAL
+  if (action.type === SET_EDIT_MEAL) {
+    const meal = state.meals.find((meal) => meal._id === action.payload.id);
+    const { _id, mealTitle, mealDate, mealLocation, mealType, mealScore } =
+      meal;
+    return {
+      ...state,
+      isEditing: true,
+      editMealId: _id,
+      mealTitle,
+      mealDate,
+      mealLocation,
+      mealType,
+      mealScore,
+    };
+  }
+
+  // ====================================================================
+  // ===== DELETE MEAL
+  if (action.type === DELETE_JOB_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+
+  // ====================================================================
+  // ===== EDIT MEAL
+  if (action.type === EDIT_MEAL_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+
+  if (action.type === EDIT_MEAL_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Meal updated!",
+    };
+  }
+
+  if (action.type === EDIT_MEAL_ERROR) {
     return {
       ...state,
       isLoading: false,

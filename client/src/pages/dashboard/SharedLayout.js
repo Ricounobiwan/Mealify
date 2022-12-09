@@ -18,6 +18,7 @@ const SharedLayout = () => {
       {/* <nav>
         <Link to="add-meal">Add meal</Link>
         <Link to="all-meals">All meals</Link>
+        <Link to="all-glucose">All glucose</Link>
       </nav> */}
     </Wrapper>
   );

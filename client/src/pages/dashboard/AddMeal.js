@@ -18,6 +18,7 @@ const AddMeal = () => {
     handleChange,
     clearValues,
     createMeal,
+    editMeal,
   } = useAppContext();
 
   const handleSubmit = (e) => {
@@ -27,7 +28,7 @@ const AddMeal = () => {
       return;
     }
     if (isEditing) {
-      // eventually editMeal()
+      editMeal();
       return;
     }
 

@@ -1,4 +1,11 @@
+import { MealsContainer, SearchMealsContainer } from "../../components";
+
 const AllMeals = () => {
-  return <h1>All Meals page</h1>;
+  return (
+    <>
+      <SearchMealsContainer />
+      <MealsContainer />
+    </>
+  );
 };
 export default AllMeals;
