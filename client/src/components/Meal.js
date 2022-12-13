@@ -23,23 +23,27 @@ const Meal = ({
   date = date.format("MMM Do, YYYY");
 
   let mealScoreStyle = "";
-  let mealScoreMsg = mealScore.split(" ")[0];
-  switch (mealScore[0]) {
-    case "N":
+  let mealScoreMsg = "TBD";
+
+  switch (mealScore) {
+    case "noScoreYet":
       mealScoreStyle = "no_score";
-      mealScoreMsg = "TBD";
+      mealScoreMsg = "No Score Yet";
       break;
-    case "8":
+    case "stableGlucoseResponse":
       mealScoreStyle = "good_score";
+      mealScoreMsg = "Score: 8-10";
       break;
-    case "5":
+    case "moderateGlucoseResponse":
       mealScoreStyle = "med_score";
+      mealScoreMsg = "Score: 5-7";
       break;
-    case "1":
+    case "highGlucoseResponse":
       mealScoreStyle = "bad_score";
+      mealScoreMsg = "Score: 1-4";
       break;
     default:
-      console.log(`Sorry, we are out of ${mealScore[0]}.`);
+      console.log(`Sorry, we are out of ${mealScore}.`);
   }
 
   return (
@@ -56,9 +60,7 @@ const Meal = ({
           <MealInfo icon={<FaLocationArrow />} text={mealLocation} />
           <MealInfo icon={<FaCalendarAlt />} text={mealDate} />
           <MealInfo icon={<FaPizzaSlice />} text={mealType} />
-          <div className={`mealScore ${mealScoreStyle}`}>
-            Score: {mealScoreMsg}
-          </div>
+          <div className={`mealScore ${mealScoreStyle}`}>{mealScoreMsg}</div>
         </div>
 
         <footer>

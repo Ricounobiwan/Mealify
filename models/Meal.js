@@ -20,8 +20,12 @@ const MealSchema = new mongoose.Schema(
         "5-7 Moderate glucose response. Swapping certain ingredients or experimenting with meal timing may help.",
         "1-4 High glucose response. Pay attention and consider avoiding.",
         "No score yet",
+        "highGlucoseResponse",
+        "noScoreYet",
+        "moderateGlucoseResponse",
+        "stableGlucoseResponse",
       ],
-      default: "No score yet",
+      default: "noScoreYet",
       required: [false, "Please provide a meal score"],
     },
     mealType: {

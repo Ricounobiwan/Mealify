@@ -26,6 +26,9 @@ import {
   EDIT_MEAL_BEGIN,
   EDIT_MEAL_SUCCESS,
   EDIT_MEAL_ERROR,
+  SHOW_STATS_BEGIN,
+  SHOW_STATS_SUCCESS,
+  CLEAR_FILTERS,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -292,6 +295,38 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "danger",
       alertText: action.payload.msg,
+    };
+  }
+
+  // ====================================================================
+  // ===== SHOW STATS MEAL
+  if (action.type === SHOW_STATS_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+      showAlert: false,
+    };
+  }
+
+  if (action.type === SHOW_STATS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      stats: action.payload.stats,
+      monthlyMeals: action.payload.monthlyMeals,
+      dailyGlucose: action.payload.dailyGlucose,
+    };
+  }
+
+  // ====================================================================
+  // ===== CLEAR FILTERS
+  if (action.type === CLEAR_FILTERS) {
+    return {
+      ...state,
+      search: "",
+      searchMealScore: "all",
+      searchMealType: "all",
+      sort: "latest",
     };
   }
 

@@ -1,4 +1,26 @@
+import { useEffect, useInsertionEffect } from "react";
+import { StatsContainer, Loading, ChartsContainer } from "../../components";
+import { useAppContext } from "../../context/appContext";
+
 const Stats = () => {
-  return <h1>Stats page</h1>;
+  const { showStats, isLoading, monthlyMeals, dailyGlucose } = useAppContext();
+  useEffect(() => {
+    showStats();
+  }, []);
+  if (isLoading) {
+    return <Loading center />;
+  }
+
+  return (
+    <>
+      <StatsContainer />
+      {monthlyMeals.length > 0 && (
+        <ChartsContainer chartTitle="Monthly Meals" />
+      )}
+      {dailyGlucose.length > 0 && (
+        <ChartsContainer chartTitle="Daily Glucose" />
+      )}
+    </>
+  );
 };
 export default Stats;

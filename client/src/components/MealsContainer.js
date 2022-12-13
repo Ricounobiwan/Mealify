@@ -5,14 +5,26 @@ import Meal from "./Meal";
 import Wrapper from "../assets/wrappers/MealsContainer";
 
 const MealsContainer = () => {
-  const { getMeals, meals, isLoading, page, totalMeals } = useAppContext();
+  const {
+    getMeals,
+    meals,
+    isLoading,
+    page,
+    totalMeals,
+    search,
+    searchMealScore,
+    searchMealType,
+    sort,
+  } = useAppContext();
 
   useEffect(() => {
     getMeals();
-  }, []);
+  }, [search, searchMealScore, searchMealType, sort]);
+
   if (isLoading) {
     return <Loading center />;
   }
+
   if (meals.length === 0) {
     return (
       <Wrapper>

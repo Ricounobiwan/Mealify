@@ -31,6 +31,9 @@ import {
   EDIT_MEAL_BEGIN,
   EDIT_MEAL_SUCCESS,
   EDIT_MEAL_ERROR,
+  SHOW_STATS_BEGIN,
+  SHOW_STATS_SUCCESS,
+  CLEAR_FILTERS,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -54,12 +57,12 @@ const initialState = {
   mealTypeOptions: ["Breakfast", "Lunch", "Dinner", "Snack"],
   mealType: "Snack",
   mealScoreOptions: [
-    "8-10 Great score - Stable glucose response.",
-    "5-7 Moderate glucose response. Swapping certain ingredients or experimenting with meal timing may help.",
-    "1-4 High glucose response. Pay attention and consider avoiding.",
-    "No score yet",
+    "stableGlucoseResponse",
+    "moderateGlucoseResponse",
+    "highGlucoseResponse",
+    "noScoreYet",
   ],
-  mealScore: "No score yet",
+  mealScore: "noScoreYet",
   meals: [],
   totalMeals: 0,
   numOfPages: 1,
@@ -68,6 +71,14 @@ const initialState = {
   totalGlucose: 0,
   numOfPagesGlucose: 1,
   pageGlucose: 1,
+  stats: {},
+  monthlyMeals: [],
+  dailyGlucose: [],
+  search: "",
+  searchMealScore: "all",
+  searchMealType: "all",
+  sort: "latest",
+  sortOptions: ["latest", "oldest", "a-z", "z-a"],
 };
 
 const AppContext = React.createContext();
@@ -142,7 +153,7 @@ const AppProvider = ({ children }) => {
   };
 
   // ==============================================================
-  // REGISTER USER
+  // ===== REGISTER USER
   const registerUser = async (currentUser) => {
     dispatch({ type: REGISTER_USER_BEGIN });
     try {
@@ -267,7 +278,12 @@ const AppProvider = ({ children }) => {
   // ====================================================================
   // ===== GET ALL MEALS
   const getMeals = async () => {
-    let url = "/meals";
+    const { search, searchMealScore, searchMealType, sort } = state;
+
+    let url = `/meals?mealScore=${searchMealScore}&mealType=${searchMealType}&sort=${sort}`;
+    if (search) {
+      url = url + `&search=${search}`;
+    }
     dispatch({ type: GET_MEALS_BEGIN });
     try {
       const { data } = await authFetch(url);
@@ -360,6 +376,32 @@ const AppProvider = ({ children }) => {
   //   getGlucose();
   // }, []);
 
+  // ====================================================================
+  // ===== SHOW STATS
+  const showStats = async () => {
+    dispatch({ type: SHOW_STATS_BEGIN });
+    try {
+      const { data } = await authFetch("/meals/stats");
+      dispatch({
+        type: SHOW_STATS_SUCCESS,
+        payload: {
+          stats: data.defaultStats,
+          monthlyMeals: data.monthlyMeals,
+          dailyGlucose: data.dailyGlucose,
+        },
+      });
+    } catch (error) {
+      console.log(error.response);
+      // logoutUser()  // TODO
+    }
+  };
+
+  // ====================================================================
+  // ===== CLEAR FILTERS
+  const clearFilters = () => {
+    dispatch({ type: CLEAR_FILTERS });
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -378,6 +420,8 @@ const AppProvider = ({ children }) => {
         setEditMeal,
         deleteMeal,
         editMeal,
+        showStats,
+        clearFilters,
       }}
     >
       {children}
