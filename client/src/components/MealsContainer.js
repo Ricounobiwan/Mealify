@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import Loading from "./Loading";
 import Meal from "./Meal";
 import Wrapper from "../assets/wrappers/MealsContainer";
+import PageBtnContainer from "./PageBtnContainer";
 
 const MealsContainer = () => {
   const {
@@ -15,11 +16,12 @@ const MealsContainer = () => {
     searchMealScore,
     searchMealType,
     sort,
+    numOfPages,
   } = useAppContext();
 
   useEffect(() => {
     getMeals();
-  }, [search, searchMealScore, searchMealType, sort]);
+  }, [page, search, searchMealScore, searchMealType, sort]);
 
   if (isLoading) {
     return <Loading center />;
@@ -43,6 +45,7 @@ const MealsContainer = () => {
           return <Meal key={meal._id} {...meal} />;
         })}
       </div>
+      {numOfPages > 1 && <PageBtnContainer />}
     </Wrapper>
   );
 };

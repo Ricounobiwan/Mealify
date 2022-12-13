@@ -29,6 +29,7 @@ import {
   SHOW_STATS_BEGIN,
   SHOW_STATS_SUCCESS,
   CLEAR_FILTERS,
+  CHANGE_PAGE,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -327,6 +328,15 @@ const reducer = (state, action) => {
       searchMealScore: "all",
       searchMealType: "all",
       sort: "latest",
+    };
+  }
+  // ====================================================================
+  // ===== CHANGE_PAGE
+  if (action.type === CHANGE_PAGE) {
+    console.log(action.payload);
+    return {
+      ...state,
+      page: action.payload.page,
     };
   }
 

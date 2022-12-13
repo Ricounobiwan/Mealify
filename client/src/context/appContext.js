@@ -34,6 +34,7 @@ import {
   SHOW_STATS_BEGIN,
   SHOW_STATS_SUCCESS,
   CLEAR_FILTERS,
+  CHANGE_PAGE,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -278,9 +279,9 @@ const AppProvider = ({ children }) => {
   // ====================================================================
   // ===== GET ALL MEALS
   const getMeals = async () => {
-    const { search, searchMealScore, searchMealType, sort } = state;
+    const { page, search, searchMealScore, searchMealType, sort } = state;
 
-    let url = `/meals?mealScore=${searchMealScore}&mealType=${searchMealType}&sort=${sort}`;
+    let url = `/meals?page=${page}&mealScore=${searchMealScore}&mealType=${searchMealType}&sort=${sort}`;
     if (search) {
       url = url + `&search=${search}`;
     }
@@ -402,6 +403,12 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CLEAR_FILTERS });
   };
 
+  // ====================================================================
+  // ===== CHANGE PAGE
+  const changePage = (page) => {
+    dispatch({ type: CHANGE_PAGE, payload: { page } });
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -422,6 +429,7 @@ const AppProvider = ({ children }) => {
         editMeal,
         showStats,
         clearFilters,
+        changePage,
       }}
     >
       {children}

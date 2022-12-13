@@ -40,7 +40,6 @@ const getAllMeals = async (req, res) => {
   }
 
   // NO AWAIT
-  console.log(queryObject);
   let result = Meal.find(queryObject);
 
   // chain sort conditions
@@ -57,12 +56,20 @@ const getAllMeals = async (req, res) => {
     result = result.sort("-mealTitle");
   }
 
-  // get the neals
+  // setup pagination
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 10;
+  const skip = (page - 1) * limit;
+
+  result = result.skip(skip).limit(limit);
+
+  // get the meals
   const meals = await result;
 
-  res
-    .status(StatusCodes.OK)
-    .json({ meals, totalMeals: meals.length, numOfPages: 1 });
+  const totalMeals = await Meal.countDocuments(queryObject);
+  const numOfPages = Math.ceil(totalMeals / limit);
+
+  res.status(StatusCodes.OK).json({ meals, totalMeals, numOfPages });
 };
 
 const updateMeal = async (req, res) => {
