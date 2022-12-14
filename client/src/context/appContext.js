@@ -299,7 +299,7 @@ const AppProvider = ({ children }) => {
       });
     } catch (error) {
       console.log(error.response);
-      // logoutUser();  // TODO
+      logoutUser(); // TODO: to comment when developping/debugging
     }
     clearAlert();
   };
@@ -366,16 +366,9 @@ const AppProvider = ({ children }) => {
       getMeals();
     } catch (error) {
       console.log(error.response);
-      // TODO logoutUser()
+      logoutUser(); // TODO: to comment when developping/debugging
     }
   };
-
-  // ====================================================================
-  // TEMPORARY
-  // useEffect(() => {
-  //   getMeals();
-  //   getGlucose();
-  // }, []);
 
   // ====================================================================
   // ===== SHOW STATS
@@ -393,7 +386,7 @@ const AppProvider = ({ children }) => {
       });
     } catch (error) {
       console.log(error.response);
-      // logoutUser()  // TODO
+      logoutUser(); // TODO: to comment when developping/debugging
     }
   };
 

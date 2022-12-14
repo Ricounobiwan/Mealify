@@ -9,21 +9,22 @@ const PageBtnContainer = () => {
     return index + 1;
   });
 
-  const prevPage = () => {
-    let newPage = page - 1;
-    if (newPage < 1) {
-      // newPage = 1
-      // alternative
-      newPage = numOfPages;
-    }
-    changePage(newPage);
-  };
   const nextPage = () => {
     let newPage = page + 1;
     if (newPage > numOfPages) {
       // newPage = numOfPages
       // alternative
       newPage = 1;
+    }
+    changePage(newPage);
+  };
+
+  const prevPage = () => {
+    let newPage = page - 1;
+    if (newPage < 1) {
+      // newPage = 1
+      // alternative
+      newPage = numOfPages;
     }
     changePage(newPage);
   };

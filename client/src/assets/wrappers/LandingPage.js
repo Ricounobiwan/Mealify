@@ -4,10 +4,14 @@ const Wrapper = styled.main`
   nav {
     width: var(--fluid-width);
     max-width: var(--max-width);
-    margin: 0 auto;
+    margin: 100px auto;
     height: var(--nav-height);
     display: flex;
     align-items: center;
+  }
+  .logo {
+    margin-top: 30%;
+    max-width: 70%;
   }
   .page {
     min-height: calc(100vh - var(--nav-height));

@@ -1,4 +1,4 @@
-import logo from "../assets/images/logo2.svg";
+import logo from "../assets/images/logo.svg";
 
 const Logo = () => {
   return <img src={logo} alt="Mealify" className="logo" />;

@@ -3,6 +3,6 @@ import { useAppContext } from "../context/appContext";
 import Wrapper from "../assets/wrappers/SearchContainer";
 
 const SearchGlucoseContainer = () => {
-  return <h1>Search Glucose Component</h1>;
+  return <h1>Search Events From Your Sensor</h1>;
 };
 export default SearchGlucoseContainer;

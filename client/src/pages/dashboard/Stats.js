@@ -6,6 +6,7 @@ const Stats = () => {
   const { showStats, isLoading, monthlyMeals, dailyGlucose } = useAppContext();
   useEffect(() => {
     showStats();
+    // eslint-disable-next-line
   }, []);
   if (isLoading) {
     return <Loading center />;

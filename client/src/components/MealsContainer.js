@@ -21,6 +21,7 @@ const MealsContainer = () => {
 
   useEffect(() => {
     getMeals();
+    // eslint-disable-next-line
   }, [page, search, searchMealScore, searchMealType, sort]);
 
   if (isLoading) {
