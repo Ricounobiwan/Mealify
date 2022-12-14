@@ -9,6 +9,12 @@ import morgan from "morgan";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import path from "path";
+
+// ===== FOR SECURITY PACKAGES
+import helmet from "helmet";
+import xss from "xss-clean";
+import mongoSanitize from "express-mongo-sanitize";
+
 // ====================
 
 // db and authenticateUser
@@ -34,6 +40,13 @@ app.use(express.static(path.resolve(__dirname, "./client/build")));
 // ====================
 
 app.use(express.json());
+
+// ===== FOR SECURITY PACKAGES
+app.use(helmet());
+app.use(xss());
+app.use(mongoSanitize());
+
+// ====================
 
 app.get("/api/v1", (req, res) => {
   res.json({ msg: "API!" });
