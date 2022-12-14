@@ -16,10 +16,10 @@ const Stats = () => {
     <>
       <StatsContainer />
       {monthlyMeals.length > 0 && (
-        <ChartsContainer chartTitle="Monthly Meals" />
+        <ChartsContainer chartTitle="Monthly Meals" chartData="monthlyMeals" />
       )}
       {dailyGlucose.length > 0 && (
-        <ChartsContainer chartTitle="Daily Glucose" />
+        <ChartsContainer chartTitle="Daily Glucose" chartData="dailyGlucose" />
       )}
     </>
   );

@@ -29,7 +29,7 @@ const Glucose = ({
 
   switch (base_type) {
     case "meal":
-      displayed_title = `${meal_title}: ${meal_tags}`;
+      displayed_title = `${meal_title}: ${meal_tags} - Meal Score: ${meal_score}`;
       break;
     case "customEvent":
       displayed_title = customEvent_title;
@@ -61,58 +61,6 @@ const Glucose = ({
         </div>
       </header>
     </Wrapper>
-
-    // <Wrapper>
-    //   <header>
-    //     <div className="main-icon">{base_type.charAt[0]}</div>
-    //   </header>
-    //   {/* <h5>{mealTitle}</h5>
-    // <h5>{date}</h5> */}
-    //   <div>
-    //     <h4>
-    //       {date} - {base_type}
-    //     </h4>
-    //     <p>
-    //       {base_type === "customEvent"
-    //         ? `customEvent_title: ${customEvent_title}`
-    //         : ""}
-    //     </p>
-    //     <p>
-    //       {base_type === "customEvent"
-    //         ? `customEvent_duration_min: ${customEvent_duration_min}`
-    //         : ""}
-    //     </p>
-
-    //     <p>
-    //       {base_type === "exercise"
-    //         ? `exercise_title: ${exercise_title} - ${exercise_duration_min} min`
-    //         : ""}
-    //     </p>
-
-    //     <p>
-    //       {base_type === "glucose" ? `glucose_value: ${glucose_value}` : ""}
-    //     </p>
-
-    //     <p>
-    //       {base_type === "meal"
-    //         ? `meal_title: ${meal_title} - Score: ${meal_score}`
-    //         : ""}
-    //     </p>
-    //     <p>{base_type === "meal" ? `meal_tags: ${meal_tags}` : ""}</p>
-
-    //     <p>{base_type === "note" ? `note_note: ${note_note}` : ""}</p>
-
-    //     <p>
-    //       {base_type === "sleep"
-    //         ? `sleep_duration_min: ${sleep_duration_min}`
-    //         : ""}
-    //     </p>
-    //     <p>
-    //       Created At: {moment(createdAt).format("MMM Do, YYYY")} - Last Updated
-    //       At: {moment(updatedAt).format("MMM Do, YYYY")}
-    //     </p>
-    //   </div>
-    // </Wrapper>
   );
 
   // {base_type === "glucose" && base_type}

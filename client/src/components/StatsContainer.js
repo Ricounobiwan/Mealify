@@ -13,28 +13,28 @@ const StatsContainer = () => {
 
   const defaultStats = [
     {
-      title: "noScoreYet",
+      title: "Meals with no Score Yet",
       count: stats.noScoreYet || 0,
       icon: <FaRedoAlt />,
       color: "#e9b949",
       bcg: "#fcefc7",
     },
     {
-      title: "stableGlucoseResponse",
+      title: "Meals with stable Glucose Response",
       count: stats.stableGlucoseResponse || 0,
       icon: <FaSun />,
       color: "#649ccb",
       bcg: "#e0f9f9",
     },
     {
-      title: "moderateGlucoseResponse",
+      title: "Meals with moderate Glucose Response",
       count: stats.moderateGlucoseResponse || 0,
       icon: <FaCloudSunRain />,
       color: "#5369ba",
       bcg: "#d0d7e8",
     },
     {
-      title: "highGlucoseResponse",
+      title: "Meals with high Glucose Response",
       count: stats.highGlucoseResponse || 0,
       icon: <FaCloudShowersHeavy />,
       color: "#d66a6a",
