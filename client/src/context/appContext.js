@@ -1,5 +1,4 @@
-// TODO: Remove useEffect from import
-import React, { useReducer, useContext, useEffect } from "react";
+import React, { useReducer, useContext } from "react";
 import reducer from "./reducer";
 import axios from "axios";
 

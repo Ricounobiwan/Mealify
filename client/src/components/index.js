@@ -12,6 +12,7 @@ import SearchGlucoseContainer from "./SearchGlucoseContainer";
 import SearchMealsContainer from "./SearchMealsContainer";
 import StatsContainer from "./StatsContainer";
 import ChartsContainer from "./ChartsContainer";
+import ChartsContainerD3 from "./ChartsContainerD3";
 
 export {
   Alert,
@@ -28,4 +29,5 @@ export {
   SmallSidebar,
   StatsContainer,
   ChartsContainer,
+  ChartsContainerD3,
 };

@@ -9,7 +9,7 @@ const ChartsContainer = ({ chartTitle, chartData }) => {
   const [barChart, setBarChart] = useState(true);
   let { [chartData]: data } = useAppContext();
 
-  if (chartTitle === "Daily Glucose") {
+  if (chartTitle === "Daily Glucose" || chartTitle === "All Glucose Captures") {
     let newData = data.map((item) => {
       let date = item.base_time_string;
       let count = item.glucose_value;
@@ -30,7 +30,11 @@ const ChartsContainer = ({ chartTitle, chartData }) => {
       <button type="button" onClick={() => setBarChart(!barChart)}>
         {barChart ? "Area Chart" : "Bar Chart"}
       </button>
-      {barChart ? <BarChart data={data} /> : <AreaChart data={data} />}
+      {barChart ? (
+        <BarChart data={data} chartTitle={chartTitle} />
+      ) : (
+        <AreaChart data={data} />
+      )}
     </Wrapper>
   );
 };
