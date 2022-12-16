@@ -7,7 +7,7 @@
 
 
 ## Dependencies
-
+Check package.json
 
 ```
 Back: npm run server

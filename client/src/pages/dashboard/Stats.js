@@ -33,10 +33,10 @@ const Stats = () => {
       {dailyGlucose.length > 0 && (
         <ChartsContainer chartTitle="Daily Glucose" chartData="dailyGlucose" />
       )}
-      <hr />
+      {/* <hr />
       {dailyGlucose.length > 0 && (
         <ChartsContainerD3 chartTitle="D3 Glucose" chartData="dailyGlucose" />
-      )}
+      )} */}
     </>
   );
 };
